@@ -6,7 +6,6 @@ services:
     container_name: stat_server
     ports:
       - "9090:9090"
-      - "9091:9091"
     depends_on:
       - stats-db
     environment:
@@ -32,13 +31,14 @@ services:
     container_name: main-service
     ports:
       - "8080:8080"
-      - "8081:8081"
     depends_on:
       - ewm-db
     environment:
       - MAIN_URL_DB=jdbc:postgresql://ewm-db:5432/ewm_db
       - MAIN_USER=postgres
       - MAIN_PASSWORD=admin
+      - STATS_SERVER_URL=http://server:9090
+
 
   ewm-db:
     image: postgres:14-alpine
