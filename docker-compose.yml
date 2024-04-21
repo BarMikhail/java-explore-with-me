@@ -8,10 +8,15 @@ services:
       - "9090:9090"
     depends_on:
       - stats-db
+#    environment:
+#      - STAT_URL_DB=jdbc:postgresql://stats-db:5432/stat
+#      - STAT_USER=postgres
+#      - STAT_PASSWORD=admin
+
     environment:
-      - STAT_URL_DB=jdbc:postgresql://stats-db:5432/stat
-      - STAT_USER=postgres
-      - STAT_PASSWORD=admin
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/stat
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
 
 
   stats-db:
