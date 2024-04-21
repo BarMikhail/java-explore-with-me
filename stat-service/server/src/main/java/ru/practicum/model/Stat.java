@@ -20,7 +20,9 @@ public class Stat {
     private Long id;
 
     private String app;
+
     private String ip;
+
     private String uri;
 
     private LocalDateTime timestamp;
