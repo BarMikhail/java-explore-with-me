@@ -21,7 +21,7 @@ public class CategoryAdminController {
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public CategoryDto createCategory(@RequestBody @Validated(Create.class) CategoryDto categoryDto) {
-        log.info("");
+        log.info("Создание категории");
         return categoryService.createCategory(categoryDto);
     }
 
@@ -29,37 +29,14 @@ public class CategoryAdminController {
     @ResponseStatus(value = HttpStatus.OK)
     public CategoryDto updateCategory(@RequestBody @Validated(Update.class) CategoryDto categoryDto,
                                       @PathVariable("catId") Long categoryId) {
-        log.info("");
+        log.info("Изменение категории");
         return categoryService.updateCategory(categoryDto, categoryId);
     }
 
     @DeleteMapping("/{catId}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable("catId") Long categoryId) {
-        log.info("");
+        log.info("Удаление категории");
         categoryService.deleteCategory(categoryId);
     }
-
-//    @GetMapping
-//    @ResponseStatus(value = HttpStatus.OK)
-//    public List<UserDto> getUsers(@RequestParam(defaultValue = "") List<Long> id,
-//                                  @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
-//                                  @RequestParam(defaultValue = "10") @Positive Integer size) {
-//        log.info("Получение списка пользователей");
-//        return userService.getUsers(id, from, size);
-//    }
-//
-//    @DeleteMapping("/{userId}")
-//    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-//    public void deleteUser(@PathVariable("userId") Long userId) {
-//        log.info("Удаление {} юзера", userId);
-//        userService.deleteUser(userId);
-//    }
-//
-//    @PostMapping
-//    @ResponseStatus(value = HttpStatus.CREATED)
-//    public UserDto createUser(@RequestBody @Validated(Create.class) UserDto userDto) {
-//        log.info("Создание юзера");
-//        return userService.createUser(userDto);
-//    }
 }

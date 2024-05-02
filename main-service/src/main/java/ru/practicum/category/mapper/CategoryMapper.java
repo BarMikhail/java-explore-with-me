@@ -10,19 +10,17 @@ import java.util.List;
 @UtilityClass
 public class CategoryMapper {
     public CategoryDto toCategoryDto(Category category) {
-        CategoryDto categoryDto = CategoryDto.builder()
+        return CategoryDto.builder()
                 .id(category.getId())
                 .name(category.getName())
                 .build();
-        return categoryDto;
     }
 
     public Category toCategory(CategoryDto categoryDto) {
-        Category category = Category.builder()
+        return Category.builder()
                 .id(categoryDto.getId())
                 .name(categoryDto.getName())
                 .build();
-        return category;
     }
 
     public List<CategoryDto> toCategoryDtoList(Iterable<Category> categories) {

@@ -1,6 +1,8 @@
 package ru.practicum.request.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import ru.practicum.additionally.Constants;
 import ru.practicum.event.model.Event;
 import ru.practicum.user.model.User;
 
@@ -20,6 +22,7 @@ public class Request {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonFormat(pattern = Constants.DATE_FORMAT, shape = JsonFormat.Shape.STRING)
     private LocalDateTime created;
 
     @Enumerated(EnumType.STRING)

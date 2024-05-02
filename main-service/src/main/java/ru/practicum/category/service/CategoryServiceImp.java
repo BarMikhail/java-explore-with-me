@@ -8,6 +8,8 @@ import ru.practicum.category.dto.CategoryDto;
 import ru.practicum.category.mapper.CategoryMapper;
 import ru.practicum.category.model.Category;
 import ru.practicum.category.repository.CategoryRepository;
+import ru.practicum.event.service.EventService;
+import ru.practicum.exception.ConflictException;
 import ru.practicum.exception.NotFoundException;
 
 import java.util.List;
@@ -19,6 +21,7 @@ public class CategoryServiceImp implements CategoryService {
 
     private final CategoryRepository categoryRepository;
 
+    private final EventService eventService;
 
     @Override
     @Transactional
@@ -41,7 +44,9 @@ public class CategoryServiceImp implements CategoryService {
     @Transactional
     public void deleteCategory(Long categoryId) {
         checkCategory(categoryId);
-
+        if (!eventService.existsByCategoryId(categoryId)) {
+            throw new ConflictException("Эта категория испльзуется!");
+        }
         categoryRepository.deleteById(categoryId);
     }
 
