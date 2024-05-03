@@ -1,9 +1,17 @@
 package ru.practicum.compilation.dto;
 
-import ru.practicum.event.dto.EventDto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import ru.practicum.event.dto.EventShortDto;
 
 import java.util.Set;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CompilationDto {
 
     private Long id;
@@ -12,5 +20,5 @@ public class CompilationDto {
 
     private String title;
 
-    private Set<EventDto> events;
+    private Set<EventShortDto> events;
 }
