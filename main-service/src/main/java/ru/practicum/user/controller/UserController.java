@@ -24,11 +24,11 @@ public class UserController {
 
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
-    public List<UserDto> getUsers(@RequestParam(defaultValue = "") List<Long> id,
+    public List<UserDto> getUsers(@RequestParam(defaultValue = "") List<Long> ids,
                                   @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
                                   @RequestParam(defaultValue = "10") @Positive Integer size) {
         log.info("Получение списка пользователей");
-        return userService.getUsers(id, from, size);
+        return userService.getUsers(ids, from, size);
     }
 
     @DeleteMapping("/{userId}")

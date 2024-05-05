@@ -27,6 +27,10 @@ public class CompilationMapper {
 
         Set<EventShortDto> eventShortDtoSet = new HashSet<>();
 
+        for (EventShortDto shortDto : eventShortDtoList) {
+            eventShortDtoSet.add(shortDto);
+        }
+
         return CompilationDto.builder()
                 .id(compilation.getId())
                 .pinned(compilation.getPinned())
@@ -43,5 +47,4 @@ public class CompilationMapper {
         }
         return result;
     }
-
 }

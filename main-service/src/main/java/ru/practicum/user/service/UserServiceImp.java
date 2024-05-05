@@ -40,14 +40,14 @@ public class UserServiceImp implements UserService {
 
     @Override
     @Transactional
-    public List<UserDto> getUsers(List<Long> id, Integer from, Integer size) {
+    public List<UserDto> getUsers(List<Long> ids, Integer from, Integer size) {
 
         PageRequest pageRequest = PageRequest.of(from / size, size);
 
-        if (id.isEmpty()) {
+        if (ids.isEmpty()) {
             return UserMapper.toUserDtoList(userRepository.findAll(pageRequest));
         } else {
-            return UserMapper.toUserDtoList(userRepository.findByIdIn(id, pageRequest));
+            return UserMapper.toUserDtoList(userRepository.findByIdInOrderByIdAsc(ids, pageRequest));
         }
     }
 
