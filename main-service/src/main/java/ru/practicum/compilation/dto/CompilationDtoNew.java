@@ -24,5 +24,5 @@ public class CompilationDtoNew {
     @Size(max = 50, groups = {Create.class, Update.class})
     private String title;
 
-    private Set<EventFullDto> events;
+    private Set<Long> events;
 }
