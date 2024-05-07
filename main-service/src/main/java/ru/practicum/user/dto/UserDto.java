@@ -17,12 +17,12 @@ import javax.validation.constraints.Size;
 public class UserDto {
     private Long id;
 
-    @Size(max = 250, groups = Create.class)
+    @Size(min = 2, max = 250, groups = Create.class)
     @NotBlank(groups = Create.class)
     private String name;
 
     @Email(groups = Create.class)
-    @Size(max = 250, groups = Create.class)
+    @Size(min = 6, max = 254, groups = Create.class)
     @NotBlank(groups = Create.class)
     private String email;
 }
