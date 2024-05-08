@@ -28,9 +28,11 @@ public class StatServiceImp implements StatService {
 
     @Override
     public List<StatResponseDto> readStat(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
-        if (start.isAfter(end)) {
-            log.info("Проверка времени");
-            throw new InvalidDataException("Начало не может быть позже конца");
+        if (start != null && end != null) {
+            if (start.isAfter(end)) {
+                log.info("Проверка времени");
+                throw new InvalidDataException("Начало не может быть позже конца");
+            }
         }
         log.info("Просмотр статистики");
         if (uris.isEmpty()) {
