@@ -1,6 +1,6 @@
 version: '3.1'
 services:
-  stat-server:
+  stats-server:
     build: stats-service/server
     image: stats-server
     container_name: stats-server
@@ -38,6 +38,7 @@ services:
       - "8080:8080"
     depends_on:
       - ewm-db
+      - stats-server
     environment:
       - MAIN_URL_DB=jdbc:postgresql://ewm-db:5432/ewm-db
       - MAIN_USER=postgres

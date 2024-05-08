@@ -27,7 +27,6 @@ public class StatServiceImp implements StatService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<StatResponseDto> readStat(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
         if (start.isAfter(end)) {
             log.info("Проверка времени");
