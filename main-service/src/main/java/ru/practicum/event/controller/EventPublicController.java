@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/events")
+@RequestMapping("/events")
 public class EventPublicController {
 
     public final EventService eventService;
@@ -25,10 +25,10 @@ public class EventPublicController {
     @ResponseStatus(value = HttpStatus.OK)
     public List<EventShortDto> getEventsByPublic(@RequestParam(required = false) String text,
                                                  @RequestParam(required = false) List<Long> categories,
-                                                 @RequestParam(required = false) Boolean paid,
+                                                 @RequestParam(defaultValue = "false") Boolean paid,
                                                  @RequestParam(required = false) String rangeStart,
                                                  @RequestParam(required = false) String rangeEnd,
-                                                 @RequestParam(required = false, defaultValue = "false") Boolean onlyAvailable,
+                                                 @RequestParam(defaultValue = "false") Boolean onlyAvailable,
                                                  @RequestParam(required = false) String sort,
                                                  @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
                                                  @Positive @RequestParam(defaultValue = "10") Integer size,

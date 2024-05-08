@@ -242,7 +242,8 @@ public class EventServiceImp implements EventService {
         event.setViews(getViewsEventById(event.getId()));
         eventRepository.save(event);
 
-        return EventMapper.toEventFullDto(event);    }
+        return EventMapper.toEventFullDto(event);
+    }
 
     @Override
     public List<EventShortDto> getEventsByPublic(String text, List<Long> categories, Boolean paid, String start, String end, Boolean onlyAvailable, String sort, Integer from, Integer size, String uri, String ip) {
@@ -252,7 +253,7 @@ public class EventServiceImp implements EventService {
 
         if (startTime != null && endTime != null) {
             if (startTime.isAfter(endTime)) {
-                throw new ValidationException("Start must be after End");
+                throw new ValidationException("Стар не может быть позже конца");
             }
         }
 
@@ -324,7 +325,7 @@ public class EventServiceImp implements EventService {
         }
         if (eventDtoUpdate.getStateAction() != null) {
             if (eventDtoUpdate.getStateAction() == StateAction.PUBLISH_EVENT) {
-                event.setState(EventState.PENDING);
+                event.setState(EventState.PUBLISHED);
                 event.setPublishedOn(LocalDateTime.now());
             } else if (eventDtoUpdate.getStateAction() == StateAction.REJECT_EVENT ||
                     eventDtoUpdate.getStateAction() == StateAction.CANCEL_REVIEW) {
@@ -355,7 +356,8 @@ public class EventServiceImp implements EventService {
 
         String uri = "/events/" + eventId;
         ResponseEntity<Object> response = statsClient.readStat(Constants.START_HISTORY, LocalDateTime.now(), uri, true);
-        List<StatResponseDto> result = objectMapper.convertValue(response.getBody(), new TypeReference<>() {});
+        List<StatResponseDto> result = objectMapper.convertValue(response.getBody(), new TypeReference<>() {
+        });
 
         if (result.isEmpty()) {
             return 0L;

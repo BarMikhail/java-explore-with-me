@@ -44,7 +44,7 @@ public class CategoryServiceImp implements CategoryService {
     @Transactional
     public void deleteCategory(Long categoryId) {
         checkCategory(categoryId);
-        if (!eventRepository.existsByCategoryId(categoryId)) {
+        if (!eventRepository.findByCategoryId(categoryId).isEmpty()) {
             throw new ConflictException("Эта категория испльзуется!");
         }
         categoryRepository.deleteById(categoryId);

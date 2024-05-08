@@ -19,7 +19,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     Event findByInitiatorIdAndId(Long initiatorId, Long eventId);
 
-    boolean existsByCategoryId(Long catId);
+    List<Event> findByCategoryId(Long categoryId);
 
     Set<Event> findByIdIn(Set<Long> events);
 
@@ -33,7 +33,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             "OR (CAST(:rangeEnd AS date) IS NULL AND e.eventDate > CAST(:rangeStart AS date)) " +
             "GROUP BY e.id " +
             "ORDER BY e.id ASC")
-
     List<Event> findEventsByAdminFromParam(@Param("users") List<Long> users,
                                            @Param("states") List<EventState> states,
                                            @Param("categories") List<Long> categories,
@@ -49,13 +48,12 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             "OR (LOWER(e.title) LIKE LOWER(CONCAT('%', :text, '%'))) " +
             "AND (:categories IS NULL OR e.category.id IN :categories) " +
             "AND (:paid IS NULL OR e.paid = :paid) " +
-            "OR (CAST(:rangeStart AS date) IS NULL AND CAST(:rangeStart AS date) IS NULL)" +
+            "OR (CAST(:rangeStart AS date) IS NULL) " +
             "OR (CAST(:rangeStart AS date) IS NULL AND e.eventDate < CAST(:rangeEnd AS date)) " +
             "OR (CAST(:rangeEnd AS date) IS NULL AND e.eventDate > CAST(:rangeStart AS date)) " +
             "AND (e.confirmedRequests < e.participantLimit OR :onlyAvailable = FALSE)" +
             "GROUP BY e.id " +
             "ORDER BY LOWER(:sort) ASC")
-
     List<Event> findEventsByPublicFromParam(@Param("text") String text,
                                             @Param("categories") List<Long> categories,
                                             @Param("paid") Boolean paid,

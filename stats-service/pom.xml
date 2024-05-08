@@ -12,7 +12,7 @@
     </parent>
 
 
-    <artifactId>stat-service</artifactId>
+    <artifactId>stats-service</artifactId>
     <packaging>pom</packaging>
 
     <modules>

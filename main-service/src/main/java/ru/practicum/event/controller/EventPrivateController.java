@@ -16,7 +16,6 @@ import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @Slf4j
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users/{userId}/events")
@@ -27,8 +26,8 @@ public class EventPrivateController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public EventFullDto createEvent(@Validated @RequestBody EventDtoNew eventDtoNew,
-                                 @PathVariable Long userId) {
+    public EventFullDto createEvent(@Valid @RequestBody EventDtoNew eventDtoNew,
+                                    @PathVariable Long userId) {
 
         log.info("");
         return eventService.createEvent(userId, eventDtoNew);

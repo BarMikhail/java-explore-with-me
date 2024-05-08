@@ -18,15 +18,15 @@ import java.time.LocalDateTime;
 public class EventDtoNew {
 
     @NotBlank
-    @Size(max = 2000)
+    @Size(min = 20, max = 2000)
     private String annotation;
 
     @NotBlank
-    @Size(max = 120)
+    @Size(min = 3, max = 120)
     private String title;
 
     @NotBlank
-    @Size(max = 7000)
+    @Size(min = 20, max = 7000)
     private String description;
 
     @NotNull

@@ -15,5 +15,5 @@ import java.util.List;
 public class RequestUpdateDtoRequest {
     private List<Long> requestIds;
 
-    RequestStatus status;
+    private RequestStatus status;
 }

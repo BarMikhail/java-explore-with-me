@@ -43,34 +43,34 @@ public class EventMapper {
         return result;
     }
 
-    public Event toEvent(EventDtoNew eventNewDto, Category category, Location location, User user) {
+    public Event toEvent(EventDtoNew eventDtoNew, Category category, Location location, User user) {
         return Event.builder()
-                .annotation(eventNewDto.getAnnotation())
+                .annotation(eventDtoNew.getAnnotation())
                 .category(category)
-                .description(eventNewDto.getDescription())
-                .eventDate(eventNewDto.getEventDate())
+                .description(eventDtoNew.getDescription())
+                .eventDate(eventDtoNew.getEventDate())
                 .initiator(user)
                 .location(location)
-                .paid(eventNewDto.getPaid())
-                .participantLimit(eventNewDto.getParticipantLimit())
-                .requestModeration(eventNewDto.getRequestModeration())
+                .paid(eventDtoNew.getPaid())
+                .participantLimit(eventDtoNew.getParticipantLimit())
+                .requestModeration(eventDtoNew.getRequestModeration())
                 .createdOn(LocalDateTime.now())
                 .views(0L)
                 .state(EventState.PENDING)
                 .confirmedRequests(0L)
-                .title(eventNewDto.getTitle())
+                .title(eventDtoNew.getTitle())
                 .build();
     }
 
     public EventFullDto toEventFullDto(Event event) {
         return EventFullDto.builder()
+                .id(event.getId())
                 .annotation(event.getAnnotation())
                 .category(CategoryMapper.toCategoryDto(event.getCategory()))
                 .confirmedRequests(event.getConfirmedRequests())
                 .createdOn(event.getCreatedOn())
                 .description(event.getDescription())
                 .eventDate(event.getEventDate())
-                .id(event.getId())
                 .initiator(UserMapper.toUserShortDto(event.getInitiator()))
                 .location(LocationMapper.toLocationDto(event.getLocation()))
                 .paid(event.getPaid())

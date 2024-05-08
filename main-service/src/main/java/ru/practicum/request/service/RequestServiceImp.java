@@ -44,7 +44,7 @@ public class RequestServiceImp implements RequestService {
             throw new ConflictException("Юзер уже участвует в мероприятии");
         }
 
-        if (event.getState() != EventState.PENDING) {
+        if (event.getState() != EventState.PUBLISHED) {
             throw new ConflictException("Событие не опубликовано");
         } else {
             Request request = Request.builder()

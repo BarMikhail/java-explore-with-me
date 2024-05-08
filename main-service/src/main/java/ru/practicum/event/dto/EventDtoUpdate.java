@@ -20,13 +20,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EventDtoUpdate {
-    @Size(max = 2000, groups = Update.class)
+    @Size(min = 20, max = 2000, groups = Update.class)
     private String annotation;
 
-    @Size(max = 120, groups = Update.class)
+    @Size(min = 3, max = 120, groups = Update.class)
     private String title;
 
-    @Size(max = 7000, groups = Update.class)
+    @Size(min = 20, max = 7000, groups = Update.class)
     private String description;
 
     private Boolean paid;
