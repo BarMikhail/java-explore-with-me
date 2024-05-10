@@ -29,7 +29,7 @@ public class EventPrivateController {
     public EventFullDto createEvent(@Valid @RequestBody EventDtoNew eventDtoNew,
                                     @PathVariable Long userId) {
 
-        log.info("");
+        log.info("Создание событий");
         return eventService.createEvent(userId, eventDtoNew);
     }
 
@@ -39,7 +39,7 @@ public class EventPrivateController {
                                                     @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
                                                     @Positive @RequestParam(defaultValue = "10") Integer size) {
 
-        log.info("");
+        log.info("Получение всех событий пользователя с id {}", userId);
         return eventService.getAllEventsByUserId(userId, from, size);
     }
 
@@ -48,7 +48,7 @@ public class EventPrivateController {
     public EventFullDto getUserEventById(@PathVariable Long userId,
                                          @PathVariable Long eventId) {
 
-        log.info("");
+        log.info("Получить событие {} пользователя {}", eventId, userId);
         return eventService.getUserEventById(userId, eventId);
     }
 
@@ -58,7 +58,7 @@ public class EventPrivateController {
                                             @PathVariable Long userId,
                                             @PathVariable Long eventId) {
 
-        log.info("");
+        log.info("Обновить событие по id {} пользователя", userId);
         return eventService.updateEventByUserId(eventDtoUpdate, userId, eventId);
     }
 
@@ -67,7 +67,7 @@ public class EventPrivateController {
     private List<RequestDto> getRequestsForEventIdByUserId(@PathVariable Long userId,
                                                            @PathVariable Long eventId) {
 
-        log.info("");
+        log.info("Получение запроса на событие {} по id {} пользователя", eventId, userId);
         return eventService.getRequestsForEventIdByUserId(userId, eventId);
     }
 
@@ -77,7 +77,7 @@ public class EventPrivateController {
                                                                           @PathVariable Long eventId,
                                                                           @RequestBody RequestUpdateDtoRequest requestDto) {
 
-        log.info("");
+        log.info("Обновление статуса запроса на событие {} по id {} пользователя", eventId, userId);
         return eventService.updateStatusRequestsForEventIdByUserId(requestDto, userId, eventId);
     }
 }

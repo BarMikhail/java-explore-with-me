@@ -33,7 +33,7 @@ public class EventAdminController {
                                                @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
                                                @Positive @RequestParam(defaultValue = "10") Integer size) {
 
-        log.info("");
+        log.info("Получить события от админа");
         return eventService.getEventsByAdmin(users, states, categories, rangeStart, rangeEnd, from, size);
     }
 
@@ -42,7 +42,7 @@ public class EventAdminController {
     public EventFullDto updateEventByAdmin(@Validated(Update.class) @RequestBody EventDtoUpdate eventDtoUpdate,
                                            @PathVariable Long eventId) {
 
-        log.info("");
+        log.info("Обновление события {} админом", eventId);
         return eventService.updateEventByAdmin(eventDtoUpdate, eventId);
     }
 }

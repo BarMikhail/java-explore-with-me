@@ -3,6 +3,7 @@ package ru.practicum.event.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -34,10 +35,10 @@ import ru.practicum.user.model.User;
 import ru.practicum.user.repository.UserRepository;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 @Transactional(readOnly = true)
@@ -246,7 +247,9 @@ public class EventServiceImp implements EventService {
     }
 
     @Override
-    public List<EventShortDto> getEventsByPublic(String text, List<Long> categories, Boolean paid, String start, String end, Boolean onlyAvailable, String sort, Integer from, Integer size, String uri, String ip) {
+    public List<EventShortDto> getEventsByPublic(String text, List<Long> categories, Boolean paid,
+                                                 String start, String end, Boolean onlyAvailable, String sort,
+                                                 Integer from, Integer size, String uri, String ip) {
 
         LocalDateTime startTime = parseDate(start);
         LocalDateTime endTime = parseDate(end);
@@ -258,14 +261,9 @@ public class EventServiceImp implements EventService {
         }
 
         PageRequest pageRequest = PageRequest.of(from / size, size);
-        List<Event> events = eventRepository.findEventsByPublicFromParam(text, categories, paid, startTime, endTime, onlyAvailable, sort, pageRequest);
+        List<Event> events = getEventsWithViews(text, categories, paid, startTime, endTime, onlyAvailable, sort, pageRequest);
 
         sendInfo(uri, ip);
-        for (Event event : events) {
-            event.setViews(getViewsEventById(event.getId()));
-            eventRepository.save(event);
-        }
-
         return EventMapper.toEventShortDtoList(events);
     }
 
@@ -364,5 +362,29 @@ public class EventServiceImp implements EventService {
         } else {
             return result.get(0).getHits();
         }
+    }
+
+    private List<Event> getEventsWithViews(String text, List<Long> categories, Boolean paid, LocalDateTime startTime, LocalDateTime endTime, Boolean onlyAvailable, String sort, PageRequest pageRequest) {
+        List<Event> events = eventRepository.findEventsByPublicFromParam(text, categories, paid, startTime, endTime, onlyAvailable, sort, pageRequest);
+        List<Long> eventIds = events.stream().map(Event::getId).collect(Collectors.toList());
+        Map<Long, Long> viewsMap = getViewsForEvents(eventIds);
+        events.forEach(event -> event.setViews(viewsMap.getOrDefault(event.getId(), 0L)));
+        return events;
+    }
+    private Map<Long, Long> getViewsForEvents(List<Long> eventIds) {
+        Map<Long, Long> viewsMap = new HashMap<>();
+        if (!eventIds.isEmpty()) {
+            List<String> uris = eventIds.stream().map(id -> "/events/" + id).collect(Collectors.toList());
+            String urisParam = String.join(",", uris);
+            ResponseEntity<Object> response = statsClient.readStat(Constants.START_HISTORY, LocalDateTime.now(), urisParam, true);
+            List<StatResponseDto> result = objectMapper.convertValue(response.getBody(), new TypeReference<>() {});
+            result.forEach(stat -> viewsMap.put(getEventIdFromUri(stat.getUri()), stat.getHits()));
+        }
+        return viewsMap;
+    }
+
+    private Long getEventIdFromUri(String uri) {
+        String[] parts = uri.split("/");
+        return Long.parseLong(parts[parts.length - 1]);
     }
 }

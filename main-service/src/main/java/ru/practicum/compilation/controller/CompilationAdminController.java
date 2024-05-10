@@ -24,14 +24,14 @@ public class CompilationAdminController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public CompilationDto createCompilation(@RequestBody @Validated(Create.class) CompilationDtoNew compilationDtoNew) {
 
-        log.info("");
+        log.info("Создание сборника");
         return compilationService.createCompilation(compilationDtoNew);
     }
 
     @DeleteMapping("/{compId}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteCompilation(@PathVariable("compId") Long compId) {
-        log.info("");
+        log.info("Удаление сборника с id {}", compId);
         compilationService.deleteCompilation(compId);
     }
 
@@ -39,7 +39,7 @@ public class CompilationAdminController {
     @ResponseStatus(value = HttpStatus.OK)
     public CompilationDto updateCompilation(@PathVariable Long compId,
                                             @RequestBody @Validated(Update.class) CompilationDtoNew compilationDtoNew) {
-        log.info("");
+        log.info("Обновление сборника с id {}", compId);
         return compilationService.updateCompilation(compId, compilationDtoNew);
     }
 }

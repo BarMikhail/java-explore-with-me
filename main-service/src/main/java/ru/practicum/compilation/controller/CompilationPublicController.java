@@ -22,7 +22,7 @@ public class CompilationPublicController {
     @GetMapping("/{compId}")
     @ResponseStatus(value = HttpStatus.OK)
     public CompilationDto getCompilationById(@PathVariable Long compId) {
-        log.info("");
+        log.info("Выдача сборника с id {}", compId);
         return compilationService.getCompilationById(compId);
     }
 
@@ -31,7 +31,7 @@ public class CompilationPublicController {
     public List<CompilationDto> getCompilations(@RequestParam(defaultValue = "false") Boolean pinned,
                                                 @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
                                                 @RequestParam(defaultValue = "10") @Positive Integer size) {
-        log.info("");
+        log.info("Выдача всех сборников");
         return compilationService.getCompilations(pinned, from, size);
     }
 }
