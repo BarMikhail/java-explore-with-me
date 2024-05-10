@@ -371,6 +371,7 @@ public class EventServiceImp implements EventService {
         events.forEach(event -> event.setViews(viewsMap.getOrDefault(event.getId(), 0L)));
         return events;
     }
+
     private Map<Long, Long> getViewsForEvents(List<Long> eventIds) {
         Map<Long, Long> viewsMap = new HashMap<>();
         if (!eventIds.isEmpty()) {
