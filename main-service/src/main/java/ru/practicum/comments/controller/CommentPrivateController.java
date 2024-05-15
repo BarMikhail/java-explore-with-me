@@ -17,6 +17,7 @@ import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @Slf4j
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users/{userId}/comments")
@@ -28,8 +29,8 @@ public class CommentPrivateController {
     @PostMapping("/{eventId}")
     @ResponseStatus(value = HttpStatus.CREATED)
     public CommentDto createComment(@Validated(Create.class) @RequestBody CommentDtoNew commentDtoNew,
-                                 @PathVariable Long userId,
-                                 @PathVariable Long eventId) {
+                                    @PathVariable Long userId,
+                                    @PathVariable Long eventId) {
 
         log.info("Создание комментария");
         return commentService.createComment(userId, eventId, commentDtoNew);
@@ -38,8 +39,8 @@ public class CommentPrivateController {
     @PatchMapping("/{commentId}")
     @ResponseStatus(value = HttpStatus.OK)
     public CommentDto updateComment(@Validated(Update.class) @RequestBody CommentDtoNew commentDtoNew,
-                                        @PathVariable Long userId,
-                                        @PathVariable Long commentId) {
+                                    @PathVariable Long userId,
+                                    @PathVariable Long commentId) {
 
         log.info("Обновление комментария");
         return commentService.updateComment(userId, commentId, commentDtoNew);
@@ -59,8 +60,8 @@ public class CommentPrivateController {
     public List<CommentShortDto> getCommentsByUserId(@PathVariable Long userId,
                                                      @RequestParam(required = false) String rangeStart,
                                                      @RequestParam(required = false) String rangeEnd,
-                                                     @PositiveOrZero @RequestParam( defaultValue = "0") Integer from,
-                                                     @Positive @RequestParam( defaultValue = "10") Integer size) {
+                                                     @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
+                                                     @Positive @RequestParam(defaultValue = "10") Integer size) {
 
         log.info("Вывод комментариев");
         return commentService.getCommentsByUserId(rangeStart, rangeEnd, userId, from, size);
