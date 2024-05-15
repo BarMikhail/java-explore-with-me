@@ -12,7 +12,6 @@ import ru.practicum.comments.dto.CommentDtoNew;
 import ru.practicum.comments.dto.CommentShortDto;
 import ru.practicum.comments.service.CommentService;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
